@@ -30,7 +30,10 @@ namespace Correios;
 
 class ECT {
     const VERSION = "1.0.0";
-     
+    /** Execulta o metodo CalcPrecoPrazo do webservice
+     * 
+     * @return array|boolean Retorna um array por servico OU se Erro retorna False
+     */
     public function CalcPrecoPrazo(){
         $msgSend = new \DOMDocument('1.0', 'utf-8');
         $CalcPrecoPrazo = $msgSend->createElement('CalcPrecoPrazo');

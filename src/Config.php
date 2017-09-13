@@ -42,6 +42,12 @@ class Config {
     const FORMATO_ENVELOPE = 3;
     
     static $cfg = [];
+    
+    /** Configura por um arquivo no servidor
+     * 
+     * @param string $configFile Filename(Completo) do arquivo
+     * @throws \Exception
+     */
     static function setDefaults($configFile){
         if( is_file($configFile) ){
             $config = file_get_contents($configFile);
@@ -58,9 +64,18 @@ class Config {
             throw new \Exception("Arquivo de configurações do 'Correios' não encontrado.");
         }
     }
+	/** Configura um parametro
+     * 
+     * @param string $name
+     * @param string $value
+     */
     static function set($name, $value){
         self::$cfg[$name] = $value;
     }
+	/** Adiciona(no final) ao parametro nCdServico um servico
+     * 
+     * @param string $nCdServico
+     */
     static function nCdServicoAppend($nCdServico){
         $value = self::get('nCdServico',true);
         if(is_null($value) || empty($value)){
@@ -71,6 +86,12 @@ class Config {
         self::set('nCdServico',$value);
     }
     
+	/** Pega valor de parametro
+     * 
+     * @param string $name Nome do Parametro
+     * @param boolean $silence Set true para nao mostrar mensagem quando não encontrado
+     * @param string $default Valor padrao se nao encontrar parametro
+     */
     static function get($name,$silence = false,$default = null){
         if( isset(self::$cfg[$name]) )
             return self::$cfg[$name];
@@ -80,50 +101,4 @@ class Config {
        
         return $default;
     }
-    /*nCdEmpresa String Seu código administrativo junto à ECT. O código está
-disponível no corpo do contrato firmado com os
-Correios.
-Não, mas o parâmetro
-tem que ser passado
-mesmo vazio.
-sDsSenha String Senha para acesso ao serviço, associada ao seu
-código administrativo. A senha inicial corresponde aos
-8 primeiros dígitos do CNPJ informado no contrato. A
-qualquer momento, é possível alterar a senha no
-endereço
-http://www.corporativo.correios.com.br/encomendas/s
-ervicosonline/recuperaSenha.
-Não, mas o parâmetro
-tem que ser passado
-mesmo vazio.
-.
-nCdServico String Código do serviço:
-Código Serviço
-40010 SEDEX Varejo
-40045 SEDEX a Cobrar Varejo
-40215 SEDEX 10 Varejo
-40290 SEDEX Hoje Varejo
-41106 PAC Varejo
-Para outros serviços, consulte o código no seu
-contrato.
-Sim.
-Pode ser mais de um
-numa consulta
-separados por vírgula.
-sCepOrigem String CEP de Origem sem hífen.Exemplo: 05311900 Sim
-sCepDestino String CEP de Destino sem hífen Sim
-nVlPeso String Peso da encomenda, incluindo sua embalagem. O
-peso deve ser informado em quilogramas. Se o
-formato for Envelope, o valor máximo permitido será 1
-kg.
-Sim
-nCdFormato Int Formato da encomenda (incluindo embalagem).
-Valores possíveis: 1, 2 ou 3
-1 – Formato caixa/pacote
-2 – Formato rolo/prisma
-3 - Envelope
-Sim
-nVlComprimento Decimal Comprimento da encomenda (incluindo embalagem),
-em centímetros.
-Sim.*/
 }

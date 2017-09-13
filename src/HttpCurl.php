@@ -33,15 +33,24 @@ class HttpCurl {
     private $url; 
     private $SOAPAction;
     private $envelopeSOAP;
-    public function __construct(){
-       
-    }
+    /** Configura url da Chamada http
+     * 
+     * @param string $url
+     */
     public function setUrl($url){
         $this->url = $url;
     }
+    /** Configura SOAPAction da Chamada http
+     *
+     * @param string $action
+     */
     public function setSOAPAction($action){
         $this->SOAPAction = $action;
     }
+    /** Coloca a mensagem SOAP dentro de um envelope SOAP
+     * 
+     * @param DOMElement $body
+     */
     public function envelopar(DOMElement $body){
         $envelope = new \DOMDocument('1.0', 'utf-8');
         $Envelope = $envelope->createElement('soap:Envelope');
@@ -59,6 +68,12 @@ class HttpCurl {
         $this->envelopeSOAP = $envelope->saveXML();
         
     }
+    
+    /** Executa a chamada
+     * 
+     * @throws \Exception
+     * @return mixed
+     */
     public function send(){
         if(is_null($this->envelopeSOAP))
             throw new \Exception("Envelope SOAP vazio");
@@ -91,23 +106,5 @@ class HttpCurl {
         curl_close($ch);
         
         return $response;
-    }/*
-        $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>
-                            <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-                              <soap:Body>
-                                <GetItemPrice xmlns="http://connecting.website.com/WSDL_Service"> // xmlns value to be set to your's WSDL URL
-                                <PRICE>'.$dataFromTheForm.'</PRICE>
-                                </GetItemPrice >
-                                </soap:Body>
-                                </soap:Envelope>';   // data from the form, e.g. some ID number
-                                    
-           
-                                    
-            // converting
-            $response1 = str_replace("<soap:Body>","",$response);
-            $response2 = str_replace("</soap:Body>","",$response1);
-                                    
-            // convertingc to XML
-            $parser = simplexml_load_string($response2);
-    }*/
+    }
 }
