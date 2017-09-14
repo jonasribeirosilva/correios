@@ -1,0 +1,25 @@
+{
+	"name" : "jonassilva/correios",
+	"description" : "Biblioteca para calculo de preço e prazo pelo webservice dos correios",
+	"license" : "MIT",
+	"require" : {
+		"php" : "^5.3.3 || ^7.0",
+		"another-vendor/package" : "1.*"
+	},
+	"support" : {
+		"email" : "jonas@jonassilva.com.br",
+		"source" : "https://github.com/jonasribeirosilva/correios"
+	},
+	"authors" : [{
+			"name" : "Jonas Silva",
+			"email" : "jonas@jonassilva.com.br",
+			"homepage" : "http://jonassilva.com.br"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"correios\\" : "src"
+		}
+	},
+	"minimum-stability" : "stable"
+}
